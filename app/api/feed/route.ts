@@ -28,7 +28,6 @@ function mapTransmission(t: Transmission): string {
 
 function mapAvailability(status: Car["status"]): string {
   if (status === "disponivel") return "in stock";
-  if (status === "reservado") return "available for order";
   return "out of stock";
 }
 
