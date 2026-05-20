@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAllCars } from "@/lib/cars-db";
+import { STORE_NAME, STORE_DESCRIPTION } from "@/data/cars";
 
 function escape(str: string | number) {
   return String(str)
@@ -21,36 +22,29 @@ export async function GET() {
     const desc = car.description ||
       `${car.brand} ${car.model} ${car.year} — ${car.mileage.toLocaleString("pt-BR")} km, ${car.fuel}, ${car.transmission}.`;
 
-    return `
-  <listing>
-    <id>${escape(car.id)}</id>
-    <title>${escape(title)}</title>
-    <description>${escape(desc)}</description>
-    <condition>used</condition>
-    <availability>in stock</availability>
-    <price>${escape(price)} BRL</price>
-    <link>${escape(`${siteUrl}/carro/${car.id}`)}</link>
-    ${image ? `<image_link>${escape(image)}</image_link>` : ""}
-    <make>${escape(car.brand)}</make>
-    <model>${escape(car.model)}</model>
-    <year>${escape(car.year)}</year>
-    <mileage>
-      <value>${escape(car.mileage)}</value>
-      <unit>KM</unit>
-    </mileage>
-    <transmission>${escape(car.transmission)}</transmission>
-    <fuel_type>${escape(car.fuel)}</fuel_type>
-    <exterior_color>${escape(car.color)}</exterior_color>
-    <state_of_vehicle>used</state_of_vehicle>
-    <body_style>Sedan</body_style>
-    <drivetrain>FWD</drivetrain>
-  </listing>`;
+    return `    <item>
+      <g:id>${escape(car.id)}</g:id>
+      <g:title>${escape(title)}</g:title>
+      <g:description>${escape(desc)}</g:description>
+      <g:link>${escape(`${siteUrl}/carro/${car.id}`)}</g:link>
+      ${image ? `<g:image_link>${escape(image)}</g:image_link>` : ""}
+      <g:condition>used</g:condition>
+      <g:availability>in stock</g:availability>
+      <g:price>${escape(price)} BRL</g:price>
+      <g:brand>${escape(car.brand)}</g:brand>
+      <g:google_product_category>916</g:google_product_category>
+    </item>`;
   }).join("\n");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<listings>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+  <channel>
+    <title>${escape(STORE_NAME)}</title>
+    <link>${escape(siteUrl)}</link>
+    <description>${escape(STORE_DESCRIPTION)}</description>
 ${items}
-</listings>`;
+  </channel>
+</rss>`;
 
   return new NextResponse(xml, {
     headers: {
