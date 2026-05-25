@@ -80,7 +80,7 @@ export default function MarketplaceClient({ cars, dealers }: Props) {
     const base = dealers.filter(d => !estado || d.state === estado);
     return [...new Set(base.map(d => d.city))].sort();
   }, [dealers, estado]);
-  const combustiveis = useMemo(() => [...new Set(cars.map(c => c.fuel))].sort(), [cars]);
+  const combustiveis = ["Flex", "Gasolina", "Diesel", "Etanol", "GNV", "Elétrico", "Híbrido"];
   const cambios      = ["Automático", "Manual", "CVT"];
 
   useEffect(() => { setCidade(""); }, [estado]);
