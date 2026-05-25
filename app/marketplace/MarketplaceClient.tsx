@@ -386,6 +386,19 @@ export default function MarketplaceClient({ cars, dealers }: Props) {
                         <p className="text-xs text-gray-500 mt-1">
                           Próximo mín: {nextBid.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
                         </p>
+                        {car.fipe_price && (
+                          <div className="flex items-center gap-2 mt-2 pt-2 border-t border-gray-700">
+                            <span className="text-xs text-gray-500">FIPE:</span>
+                            <span className="text-xs text-gray-300 font-medium">
+                              {car.fipe_price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
+                            </span>
+                            {car.price < car.fipe_price && (
+                              <span className="text-xs font-bold text-green-400 ml-auto">
+                                {((1 - car.price / car.fipe_price) * 100).toFixed(0)}% abaixo ↓
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
 
                       <div className="mt-auto w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2.5 rounded-xl text-sm text-center transition-colors flex items-center justify-center gap-2">

@@ -76,6 +76,23 @@ export default function CarCard({ car }: CarCardProps) {
           <p className="text-2xl font-bold text-yellow-600">
             {car.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
           </p>
+          {car.fipe_price && (
+            <div className="flex items-center gap-2 mt-1">
+              <span className="text-xs text-gray-400">
+                FIPE: {car.fipe_price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
+              </span>
+              {car.price < car.fipe_price && (
+                <span className="text-xs font-semibold text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full">
+                  {((1 - car.price / car.fipe_price) * 100).toFixed(0)}% abaixo
+                </span>
+              )}
+              {car.price > car.fipe_price && (
+                <span className="text-xs font-semibold text-red-500 bg-red-50 px-1.5 py-0.5 rounded-full">
+                  {((car.price / car.fipe_price - 1) * 100).toFixed(0)}% acima
+                </span>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Actions */}

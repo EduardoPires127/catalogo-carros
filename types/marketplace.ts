@@ -32,4 +32,5 @@ export interface MarketplaceCar {
   description: string;
   features: string[];
   created_at: string;
+  fipe_price?: number;
 }

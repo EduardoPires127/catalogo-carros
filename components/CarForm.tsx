@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Car } from "@/types/car";
@@ -29,6 +29,14 @@ const defaultData: CarFormData = {
   features: [],
 };
 
+interface FipeResult {
+  preco: number;
+  preco_formatado: string;
+  codigo_fipe: string;
+  mes_referencia: string;
+  error?: string;
+}
+
 export default function CarForm({ initialData, carId }: CarFormProps) {
   const [form, setForm] = useState<CarFormData>({ ...defaultData, ...initialData });
   const [images, setImages] = useState<string[]>(initialData?.images ?? []);
@@ -36,8 +44,36 @@ export default function CarForm({ initialData, carId }: CarFormProps) {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
+  const [fipe, setFipe] = useState<FipeResult | null>(initialData?.fipe_price ? {
+    preco: initialData.fipe_price,
+    preco_formatado: initialData.fipe_price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 }),
+    codigo_fipe: initialData.fipe_code ?? "",
+    mes_referencia: initialData.fipe_ref ?? "",
+  } : null);
+  const [fipeLoading, setFipeLoading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  const fetchFipe = useCallback(async (brand: string, model: string, year: number) => {
+    if (!brand.trim() || !model.trim() || !year) return;
+    setFipeLoading(true);
+    setFipe(null);
+    try {
+      const res = await fetch(`/api/fipe?marca=${encodeURIComponent(brand)}&modelo=${encodeURIComponent(model)}&ano=${year}`);
+      const data: FipeResult = await res.json();
+      setFipe(data);
+    } catch {
+      setFipe({ preco: 0, preco_formatado: "", codigo_fipe: "", mes_referencia: "", error: "Erro ao consultar" });
+    }
+    setFipeLoading(false);
+  }, []);
+
+  // Auto-consulta com debounce quando marca/modelo/ano mudam
+  useEffect(() => {
+    if (!form.brand || !form.model || !form.year) return;
+    const t = setTimeout(() => fetchFipe(form.brand, form.model, form.year), 1000);
+    return () => clearTimeout(t);
+  }, [form.brand, form.model, form.year, fetchFipe]);
 
   async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files ?? []);
@@ -75,6 +111,11 @@ export default function CarForm({ initialData, carId }: CarFormProps) {
       ...form,
       images,
       features: featuresText.split(",").map(s => s.trim()).filter(Boolean),
+      ...(fipe && !fipe.error ? {
+        fipe_price: fipe.preco,
+        fipe_code:  fipe.codigo_fipe,
+        fipe_ref:   fipe.mes_referencia,
+      } : {}),
     };
 
     const url = isEditing ? `/api/admin/cars/${carId}` : "/api/admin/cars";
@@ -143,6 +184,45 @@ export default function CarForm({ initialData, carId }: CarFormProps) {
           <span className="w-6 h-6 bg-yellow-500 text-black rounded-full text-xs flex items-center justify-center font-bold">2</span>
           Valores e quilometragem
         </h2>
+
+        {/* FIPE */}
+        <div className={`mb-4 rounded-xl border p-4 flex items-center gap-4 transition-all ${
+          fipeLoading ? "border-yellow-700/40 bg-yellow-900/10" :
+          fipe && !fipe.error ? "border-green-700/40 bg-green-900/10" :
+          fipe?.error ? "border-red-700/30 bg-red-900/10" :
+          "border-gray-700 bg-gray-800/50"
+        }`}>
+          <div className="flex-1">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">Tabela FIPE</p>
+            {fipeLoading && (
+              <p className="text-yellow-400 text-sm animate-pulse">Consultando FIPE...</p>
+            )}
+            {!fipeLoading && fipe && !fipe.error && (
+              <>
+                <p className="text-green-400 text-xl font-bold">{fipe.preco_formatado}</p>
+                <p className="text-gray-500 text-xs mt-0.5">Cód. {fipe.codigo_fipe} · Ref. {fipe.mes_referencia}</p>
+              </>
+            )}
+            {!fipeLoading && fipe?.error && (
+              <p className="text-red-400 text-sm">Não encontrado na tabela FIPE</p>
+            )}
+            {!fipeLoading && !fipe && (
+              <p className="text-gray-500 text-sm">Preencha marca, modelo e ano para consultar</p>
+            )}
+          </div>
+          {fipe && !fipe.error && form.price > 0 && (
+            <div className="text-right shrink-0">
+              <p className="text-xs text-gray-500">Diferença</p>
+              <p className={`text-sm font-bold ${form.price < fipe.preco ? "text-green-400" : "text-red-400"}`}>
+                {form.price < fipe.preco
+                  ? `${((1 - form.price / fipe.preco) * 100).toFixed(0)}% abaixo`
+                  : `${((form.price / fipe.preco - 1) * 100).toFixed(0)}% acima`
+                }
+              </p>
+            </div>
+          )}
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className={labelClass}>Preço (R$) *</label>
@@ -176,6 +256,7 @@ export default function CarForm({ initialData, carId }: CarFormProps) {
               <option value="Gasolina">Gasolina</option>
               <option value="Etanol">Etanol</option>
               <option value="Diesel">Diesel</option>
+              <option value="GNV">GNV</option>
               <option value="Elétrico">Elétrico</option>
               <option value="Híbrido">Híbrido</option>
             </select>

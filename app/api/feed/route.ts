@@ -11,6 +11,7 @@ function mapFuel(fuel: FuelType): string {
     Gasolina: "Gasoline",
     Etanol: "Ethanol",
     Diesel: "Diesel",
+    GNV: "Natural Gas",
     Elétrico: "Electric",
     Híbrido: "Hybrid",
   };
