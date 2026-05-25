@@ -104,6 +104,24 @@ export default function MarketplaceCarPage() {
                 <p className="text-xs text-gray-500 mt-1">
                   Próximo lance mínimo: {(car.price + 5000).toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
                 </p>
+                {car.fipe_price && (
+                  <div className="mt-3 pt-3 border-t border-gray-700 flex items-center gap-3 flex-wrap">
+                    <span className="text-xs text-gray-400">
+                      Tabela FIPE: <span className="text-gray-200 font-semibold">
+                        {car.fipe_price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
+                      </span>
+                    </span>
+                    {car.price < car.fipe_price ? (
+                      <span className="text-xs font-bold text-green-400 bg-green-900/30 border border-green-700/40 px-2 py-0.5 rounded-full">
+                        {((1 - car.price / car.fipe_price) * 100).toFixed(0)}% abaixo da FIPE ↓
+                      </span>
+                    ) : (
+                      <span className="text-xs font-bold text-red-400 bg-red-900/20 border border-red-700/30 px-2 py-0.5 rounded-full">
+                        {((car.price / car.fipe_price - 1) * 100).toFixed(0)}% acima da FIPE ↑
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 

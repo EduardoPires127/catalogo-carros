@@ -70,9 +70,34 @@ export default async function CarDetailPage({ params }: { params: Promise<{ id: 
               </span>
             </div>
 
-            <p className="text-4xl font-bold text-gray-900 mt-4 mb-6">
-              {car.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
-            </p>
+            <div className="mt-4 mb-6">
+              <p className="text-4xl font-bold text-gray-900">
+                {car.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
+              </p>
+              {car.fipe_price && (
+                <div className="flex items-center gap-3 mt-2">
+                  <span className="text-sm text-gray-500">
+                    Tabela FIPE: <span className="font-semibold text-gray-700">
+                      {car.fipe_price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
+                    </span>
+                  </span>
+                  {car.price < car.fipe_price ? (
+                    <span className="text-xs font-bold text-green-700 bg-green-100 border border-green-200 px-2 py-0.5 rounded-full">
+                      {((1 - car.price / car.fipe_price) * 100).toFixed(0)}% abaixo da FIPE ↓
+                    </span>
+                  ) : car.price > car.fipe_price ? (
+                    <span className="text-xs font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full">
+                      {((car.price / car.fipe_price - 1) * 100).toFixed(0)}% acima da FIPE ↑
+                    </span>
+                  ) : (
+                    <span className="text-xs font-bold text-gray-600 bg-gray-100 px-2 py-0.5 rounded-full">Na FIPE</span>
+                  )}
+                  {car.fipe_code && (
+                    <span className="text-xs text-gray-400">Cód. {car.fipe_code} · {car.fipe_ref}</span>
+                  )}
+                </div>
+              )}
+            </div>
 
             <div className="grid grid-cols-3 gap-3 mb-6">
               {specs.map((spec) => (
