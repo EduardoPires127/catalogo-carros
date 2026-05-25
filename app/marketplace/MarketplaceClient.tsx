@@ -299,7 +299,7 @@ export default function MarketplaceClient({ cars, dealers }: Props) {
       <div className="flex gap-6 items-start">
 
         {/* Sidebar desktop */}
-        <aside className="hidden lg:block w-64 shrink-0 bg-gray-900 border border-gray-800 rounded-2xl p-5 sticky top-20">
+        <aside className="hidden lg:block w-64 shrink-0 bg-gray-900 border border-gray-800 rounded-2xl p-5 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto">
           {Sidebar}
         </aside>
 
