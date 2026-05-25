@@ -81,7 +81,7 @@ export default function MarketplaceClient({ cars, dealers }: Props) {
     return [...new Set(base.map(d => d.city))].sort();
   }, [dealers, estado]);
   const combustiveis = useMemo(() => [...new Set(cars.map(c => c.fuel))].sort(), [cars]);
-  const cambios      = useMemo(() => [...new Set(cars.map(c => c.transmission))].sort(), [cars]);
+  const cambios      = ["Automático", "Manual", "CVT"];
 
   useEffect(() => { setCidade(""); }, [estado]);
 
@@ -227,7 +227,7 @@ export default function MarketplaceClient({ cars, dealers }: Props) {
 
       {/* Possui doc */}
       <div>
-        <label className={labelCls}>Possui documentação</label>
+        <label className={labelCls}>Possui documentação em dia</label>
         <select value={possuiDoc} onChange={e => setPossuiDoc(e.target.value)} className={selectCls}>
           <option value="">Qualquer</option>
           <option value="sim">✅ Sim</option>
