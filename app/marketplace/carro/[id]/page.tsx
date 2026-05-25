@@ -59,6 +59,14 @@ export default function MarketplaceCarPage() {
           <span className="text-gray-300">{car.brand} {car.model}</span>
         </div>
 
+        {/* Status leilão */}
+        <div className="flex items-center gap-3 mb-4">
+          <span className="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full animate-pulse">LEILÃO AO VIVO</span>
+          <span className="text-gray-400 text-sm">Encerra em <span className="text-yellow-400 font-mono font-bold">02:34:17</span></span>
+          <span className="text-gray-600">·</span>
+          <span className="text-gray-400 text-sm">14 lances</span>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left: Gallery + Info */}
           <div className="lg:col-span-2 space-y-6">
@@ -88,9 +96,15 @@ export default function MarketplaceCarPage() {
             <div>
               <h1 className="text-2xl font-bold">{car.brand} {car.model}</h1>
               <p className="text-gray-400 text-sm mt-0.5">{car.version} · {car.year}</p>
-              <p className="text-yellow-400 text-3xl font-bold mt-3">
-                {car.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
-              </p>
+              <div className="mt-3 bg-gray-900 border border-yellow-600/30 rounded-2xl p-4">
+                <p className="text-xs text-gray-500 mb-1">Lance atual</p>
+                <p className="text-yellow-400 text-3xl font-bold">
+                  {car.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Próximo lance mínimo: {(car.price + 5000).toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}
+                </p>
+              </div>
             </div>
 
             {/* Specs grid */}
@@ -138,7 +152,7 @@ export default function MarketplaceCarPage() {
           <div className="space-y-5">
             {/* Dealer card */}
             <Link href={`/marketplace/${dealer.slug}`} className="block bg-gray-900 rounded-2xl border border-gray-800 hover:border-yellow-600/40 transition-colors p-5">
-              <p className="text-xs text-gray-500 mb-3 uppercase tracking-wider">Vendido por</p>
+              <p className="text-xs text-gray-500 mb-3 uppercase tracking-wider">Leiloeiro</p>
               <div className="flex items-center gap-3">
                 {dealer.logo_url ? (
                   <img src={dealer.logo_url} alt={dealer.company_name} className="w-12 h-12 rounded-xl object-cover" />
@@ -159,9 +173,9 @@ export default function MarketplaceCarPage() {
             <div className="bg-gray-900 rounded-2xl border border-gray-800 p-5">
               <h2 className="font-semibold text-white mb-4 flex items-center gap-2">
                 <svg className="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-                Falar com a revendedora
+                Dar lance
               </h2>
 
               {sent ? (
@@ -171,8 +185,8 @@ export default function MarketplaceCarPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <p className="text-white font-semibold">Mensagem enviada!</p>
-                  <p className="text-gray-400 text-sm mt-1">A revendedora entrará em contato pelo e-mail informado.</p>
+                  <p className="text-white font-semibold">Lance registrado!</p>
+                  <p className="text-gray-400 text-sm mt-1">Você será notificado por e-mail se for superado.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSendMessage} className="space-y-3">
@@ -185,28 +199,33 @@ export default function MarketplaceCarPage() {
                     <input type="email" value={msgEmail} onChange={e => setMsgEmail(e.target.value)} className={inputClass} placeholder="joao@email.com" required />
                   </div>
                   <div>
-                    <label className={labelClass}>Mensagem *</label>
-                    <textarea
+                    <label className={labelClass}>Valor do seu lance (R$) *</label>
+                    <input
+                      type="number"
                       value={msgText}
                       onChange={e => setMsgText(e.target.value)}
-                      className={`${inputClass} h-24 resize-none`}
-                      placeholder={`Olá, tenho interesse no ${car.brand} ${car.model} ${car.year}. Poderia me dar mais informações?`}
+                      className={inputClass}
+                      placeholder={`Mín: ${(car.price + 5000).toLocaleString("pt-BR")}`}
+                      min={car.price + 5000}
                       required
                     />
                   </div>
                   <button
                     type="submit"
                     disabled={sending}
-                    className="w-full bg-yellow-500 hover:bg-yellow-400 disabled:opacity-50 text-black font-bold py-3 rounded-xl transition-colors"
+                    className="w-full bg-yellow-500 hover:bg-yellow-400 disabled:opacity-50 text-black font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2"
                   >
-                    {sending ? "Enviando..." : "Enviar mensagem"}
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                    {sending ? "Registrando..." : "Confirmar lance"}
                   </button>
                 </form>
               )}
             </div>
 
             <button onClick={() => router.back()} className="w-full py-3 rounded-xl border border-gray-700 text-gray-400 hover:text-white text-sm transition-colors">
-              ← Voltar ao marketplace
+              ← Voltar aos leilões
             </button>
           </div>
         </div>
