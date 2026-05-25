@@ -146,6 +146,76 @@ export default function MarketplaceCarPage() {
                 </div>
               </div>
             )}
+
+            {/* Documentação */}
+            <div className="bg-gray-900 rounded-2xl border border-gray-800 p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <svg className="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Documentação</h2>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { label: "CRLV em dia",          ok: true  },
+                  { label: "IPVA pago",             ok: true  },
+                  { label: "Multas pendentes",      ok: false },
+                  { label: "Restrição judicial",    ok: false },
+                  { label: "Recall pendente",       ok: false },
+                  { label: "Financiamento quitado", ok: true  },
+                ].map(({ label, ok }) => (
+                  <div key={label} className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-xs font-medium ${
+                    ok
+                      ? "bg-green-900/20 border-green-700/40 text-green-400"
+                      : "bg-gray-800 border-gray-700 text-gray-500 line-through"
+                  }`}>
+                    <span className="text-base leading-none">{ok ? "✅" : "—"}</span>
+                    {label}
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-gray-600 mt-3">* Informações declaradas pelo leiloeiro. Verifique antes de arrematar.</p>
+            </div>
+
+            {/* Laudo Cautelar */}
+            <div className="bg-gray-900 rounded-2xl border border-gray-800 p-5">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                  </svg>
+                  <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Laudo Cautelar</h2>
+                </div>
+                <span className="bg-blue-600/20 text-blue-400 text-xs font-bold px-2 py-0.5 rounded-full border border-blue-700/40">
+                  APROVADO
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                {[
+                  { label: "Chassi original",      ok: true  },
+                  { label: "Motor original",        ok: true  },
+                  { label: "Sinistro grave",        ok: false },
+                  { label: "Lataria original",      ok: true  },
+                  { label: "Hodômetro adulterado",  ok: false },
+                  { label: "Veículo clonado",       ok: false },
+                ].map(({ label, ok }) => (
+                  <div key={label} className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-xs font-medium ${
+                    ok
+                      ? "bg-green-900/20 border-green-700/40 text-green-400"
+                      : "bg-gray-800 border-gray-700 text-gray-500 line-through"
+                  }`}>
+                    <span className="text-base leading-none">{ok ? "✅" : "—"}</span>
+                    {label}
+                  </div>
+                ))}
+              </div>
+              <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-blue-700/40 text-blue-400 hover:bg-blue-900/20 text-sm font-medium transition-colors">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Baixar laudo completo (PDF)
+              </button>
+            </div>
           </div>
 
           {/* Right: Dealer + Message */}
