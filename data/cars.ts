@@ -27,6 +27,7 @@ export const cars: Car[] = [
       "Toyota Corolla em excelente estado de conservação. Único dono, revisões em concessionária. Carro extremamente conservado com todos os opcionais de fábrica.",
     features: ["Ar condicionado digital", "Multimídia Toyota", "Câmera de ré", "Sensor de estacionamento", "Controle de cruzeiro", "Bancos de couro"],
     whatsapp: WHATSAPP_NUMBER,
+    fipe_price: 122800, fipe_code: "005004-2", fipe_ref: "maio/2026",
   },
   {
     id: "2",
@@ -49,6 +50,7 @@ export const cars: Car[] = [
       "Honda Civic Touring top de linha! Apenas 12.000 km rodados. Veículo impecável com todos os opcionais. Teto solar elétrico, bancos aquecidos e resfriados.",
     features: ["Teto solar", "Bancos aquecidos", "Honda Sensing", "Apple CarPlay/Android Auto", "Faróis full LED", "Head-up display"],
     whatsapp: WHATSAPP_NUMBER,
+    fipe_price: 171500, fipe_code: "014250-0", fipe_ref: "maio/2026",
   },
   {
     id: "3",
@@ -71,6 +73,7 @@ export const cars: Car[] = [
       "VW T-Cross Highline em ótimo estado. SUV compacto ideal para a cidade. Multimídia com CarPlay, câmera e sensores. Revisões em dia.",
     features: ["Multimídia 10\"", "CarPlay/Android Auto", "Câmera de ré 360°", "Sensor de estacionamento dianteiro e traseiro", "Keyless Entry", "Start/Stop"],
     whatsapp: WHATSAPP_NUMBER,
+    fipe_price: 132400, fipe_code: "059337-8", fipe_ref: "maio/2026",
   },
   {
     id: "4",
@@ -93,6 +96,7 @@ export const cars: Car[] = [
       "Jeep Compass Limited Diesel 4x4, o mais completo da categoria. Pacote Premium com teto panorâmico, banco em couro e multimídia de 10 polegadas.",
     features: ["4x4", "Teto panorâmico", "Bancos em couro", "Multimídia 10\"", "Som Beats Audio", "ACC adaptativo"],
     whatsapp: WHATSAPP_NUMBER,
+    fipe_price: 143900, fipe_code: "032043-3", fipe_ref: "maio/2026",
   },
   {
     id: "5",
@@ -115,6 +119,7 @@ export const cars: Car[] = [
       "HB20 Diamond Plus semi-novo, quase zero! 8.000 km. Motor 1.0 Turbo econômico e potente. Multimídia com Bluelink conectada.",
     features: ["Bluelink conectado", "Multimídia 8\"", "Carregamento wireless", "Câmera de ré", "Cruise control", "Sensor de ponto cego"],
     whatsapp: WHATSAPP_NUMBER,
+    fipe_price: 88600, fipe_code: "022283-6", fipe_ref: "maio/2026",
   },
   {
     id: "6",
@@ -137,6 +142,7 @@ export const cars: Car[] = [
       "Onix Plus Premier em ótimo estado. Carro vendido como exemplo de histórico.",
     features: ["MyLink 2", "Câmera de ré", "Sensores traseiros", "Bancos em couro", "Ar condicionado digital", "Controle de cruzeiro"],
     whatsapp: WHATSAPP_NUMBER,
+    fipe_price: 91200, fipe_code: "010273-1", fipe_ref: "maio/2026",
   },
   {
     id: "7",
@@ -159,6 +165,7 @@ export const cars: Car[] = [
       "Fiat Pulse Impetus novo demais! 18.000 km. SUV compacto mais vendido do Brasil. Design arrojado e tecnologia de ponta.",
     features: ["Multimídia 10.1\"", "Câmera 360°", "Teto solar elétrico", "Carregamento sem fio", "Bancos aquecidos", "Piloto automático adaptativo"],
     whatsapp: WHATSAPP_NUMBER,
+    fipe_price: 109700, fipe_code: "038066-4", fipe_ref: "maio/2026",
   },
   {
     id: "8",
@@ -181,6 +188,7 @@ export const cars: Car[] = [
       "Ford Territory SEL com pacote completo. SUV elegante com excelente espaço interno. Reservado - entre em contato para mais informações.",
     features: ["SYNC 3 com CarPlay", "Teto panorâmico", "Câmera 360°", "Bancos em couro aquecidos", "Rodas 19\"", "Co-pilot 360"],
     whatsapp: WHATSAPP_NUMBER,
+    fipe_price: 136500, fipe_code: "021041-8", fipe_ref: "maio/2026",
   },
   {
     id: "9",
@@ -203,6 +211,7 @@ export const cars: Car[] = [
       "Renault Kwid Intense zero km de fábrica. Econômico e moderno. Ideal para cidade com baixo custo de manutenção.",
     features: ["Multimídia 8\" com CarPlay", "Câmera de ré", "Sensor de estacionamento", "Ar condicionado", "Direção elétrica", "Computador de bordo"],
     whatsapp: WHATSAPP_NUMBER,
+    fipe_price: 62300, fipe_code: "044002-5", fipe_ref: "maio/2026",
   },
   {
     id: "10",
@@ -225,5 +234,6 @@ export const cars: Car[] = [
       "Nissan Kicks Advance com baixa quilometragem. SUV com excelente custo-benefício. Revisões em dia, sem sinistros.",
     features: ["Nissan Connect", "CarPlay/Android Auto", "Câmera 360° Around View", "Keyless Entry", "Controle de cruzeiro", "Lane departure warning"],
     whatsapp: WHATSAPP_NUMBER,
+    fipe_price: 124800, fipe_code: "036073-2", fipe_ref: "maio/2026",
   },
 ];

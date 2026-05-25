@@ -54,7 +54,7 @@ export const STATIC_MARKETPLACE_CARS: MarketplaceCar[] = [
     price: 145000, mileage: 32000, color: "Prata", fuel: "Flex",
     transmission: "Automático", doors: 4, status: "disponivel",
     images: [], description: "Único dono, revisões na concessionária.", features: ["Câmera de ré", "Multimídia", "Sensor de estacionamento"],
-    created_at: "2024-03-01",
+    created_at: "2024-03-01", fipe_price: 152400,
   },
   {
     id: "mp2",
@@ -64,7 +64,7 @@ export const STATIC_MARKETPLACE_CARS: MarketplaceCar[] = [
     price: 128000, mileage: 48000, color: "Preto", fuel: "Flex",
     transmission: "CVT", doors: 4, status: "disponivel",
     images: [], description: "IPVA pago, excelente estado.", features: ["Teto solar", "Bancos em couro", "Keyless Entry"],
-    created_at: "2024-03-05",
+    created_at: "2024-03-05", fipe_price: 139700,
   },
   {
     id: "mp3",
@@ -74,7 +74,7 @@ export const STATIC_MARKETPLACE_CARS: MarketplaceCar[] = [
     price: 289000, mileage: 18000, color: "Branco", fuel: "Gasolina",
     transmission: "Automático", doors: 4, status: "disponivel",
     images: [], description: "Impecável, revisado e com procedência.", features: ["Teto panorâmico", "Bancos aquecidos", "Central multimídia"],
-    created_at: "2024-03-10",
+    created_at: "2024-03-10", fipe_price: 318500,
   },
   {
     id: "mp4",
@@ -84,7 +84,7 @@ export const STATIC_MARKETPLACE_CARS: MarketplaceCar[] = [
     price: 310000, mileage: 22000, color: "Cinza", fuel: "Gasolina",
     transmission: "Automático", doors: 4, status: "disponivel",
     images: [], description: "Único dono, todas as revisões feitas.", features: ["Bancos em couro", "Sistema MBUX", "Faróis LED"],
-    created_at: "2024-03-12",
+    created_at: "2024-03-12", fipe_price: 298000,
   },
   {
     id: "mp5",
@@ -94,7 +94,7 @@ export const STATIC_MARKETPLACE_CARS: MarketplaceCar[] = [
     price: 142000, mileage: 8000, color: "Vermelho", fuel: "Flex",
     transmission: "Automático", doors: 4, status: "disponivel",
     images: [], description: "Seminovo revisado e com procedência.", features: ["Câmera 360°", "Carregamento wireless", "Assistente de faixa"],
-    created_at: "2024-03-15",
+    created_at: "2024-03-15", fipe_price: 148900,
   },
   {
     id: "mp6",
@@ -104,6 +104,6 @@ export const STATIC_MARKETPLACE_CARS: MarketplaceCar[] = [
     price: 118000, mileage: 26000, color: "Azul", fuel: "Flex",
     transmission: "Automático", doors: 4, status: "disponivel",
     images: [], description: "Sem detalhes, excelente custo-benefício.", features: ["Multimídia 8 pol.", "Câmera de ré", "Controle de tração"],
-    created_at: "2024-03-18",
+    created_at: "2024-03-18", fipe_price: 125300,
   },
 ];
