@@ -17,6 +17,7 @@ export default function MarketplaceCarPage() {
   const [msgText, setMsgText] = useState("");
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [showFipeWarning, setShowFipeWarning] = useState(false);
 
   if (!car || !dealer) {
     return (
@@ -34,8 +35,14 @@ export default function MarketplaceCarPage() {
 
   async function handleSendMessage(e: React.FormEvent) {
     e.preventDefault();
+    // Verifica se lance ultrapassa a FIPE
+    const bidValue = Number(msgText);
+    if (car?.fipe_price && bidValue > car.fipe_price && !showFipeWarning) {
+      setShowFipeWarning(true);
+      return;
+    }
+    setShowFipeWarning(false);
     setSending(true);
-    // TODO: connect to API
     await new Promise(r => setTimeout(r, 800));
     setSent(true);
     setSending(false);
@@ -310,6 +317,42 @@ export default function MarketplaceCarPage() {
                       required
                     />
                   </div>
+                  {/* Aviso FIPE */}
+                  {showFipeWarning && car.fipe_price && (
+                    <div className="bg-orange-900/30 border border-orange-600/50 rounded-xl p-4">
+                      <div className="flex items-start gap-3">
+                        <svg className="w-5 h-5 text-orange-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                        </svg>
+                        <div>
+                          <p className="text-orange-400 font-bold text-sm mb-1">Lance acima da tabela FIPE!</p>
+                          <p className="text-orange-200/80 text-xs leading-relaxed">
+                            Seu lance de <strong>{Number(msgText).toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}</strong> está{" "}
+                            <strong>{((Number(msgText) / car.fipe_price - 1) * 100).toFixed(0)}% acima</strong> do preço FIPE ({car.fipe_price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 })}).
+                            Tem certeza que deseja continuar?
+                          </p>
+                          <div className="flex gap-2 mt-3">
+                            <button
+                              type="button"
+                              onClick={() => setShowFipeWarning(false)}
+                              className="flex-1 py-2 rounded-lg border border-gray-600 text-gray-300 text-xs font-medium hover:bg-gray-800 transition-colors"
+                            >
+                              Revisar lance
+                            </button>
+                            <button
+                              type="submit"
+                              disabled={sending}
+                              className="flex-1 py-2 rounded-lg bg-orange-500 hover:bg-orange-400 disabled:opacity-50 text-white text-xs font-bold transition-colors"
+                            >
+                              {sending ? "Registrando..." : "Sim, confirmar mesmo assim"}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {!showFipeWarning && (
                   <button
                     type="submit"
                     disabled={sending}
@@ -320,6 +363,7 @@ export default function MarketplaceCarPage() {
                     </svg>
                     {sending ? "Registrando..." : "Confirmar lance"}
                   </button>
+                  )}
                 </form>
               )}
             </div>
