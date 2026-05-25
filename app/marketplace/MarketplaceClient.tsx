@@ -62,7 +62,7 @@ export default function MarketplaceClient({ cars, dealers }: Props) {
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Hero */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-1">Marketplace de Veículos</h1>
+        <h1 className="text-3xl font-bold text-white mb-1">Auto Avaliar de Veículos</h1>
         <p className="text-gray-400">Encontre o carro ideal nas melhores revendedoras do Brasil</p>
       </div>
 

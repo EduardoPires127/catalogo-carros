@@ -52,7 +52,7 @@ export default function MarketplaceCarPage() {
 
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-gray-500 mb-6 flex-wrap">
-          <Link href="/marketplace" className="hover:text-yellow-400 transition-colors">Marketplace</Link>
+          <Link href="/marketplace" className="hover:text-yellow-400 transition-colors">Auto Avaliar</Link>
           <span>/</span>
           <Link href={`/marketplace/${dealer.slug}`} className="hover:text-yellow-400 transition-colors">{dealer.company_name}</Link>
           <span>/</span>

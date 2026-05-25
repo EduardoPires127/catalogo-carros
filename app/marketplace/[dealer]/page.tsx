@@ -24,7 +24,7 @@ export default async function DealerPage({ params }: { params: Promise<{ dealer:
 
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-          <Link href="/marketplace" className="hover:text-yellow-400 transition-colors">Marketplace</Link>
+          <Link href="/marketplace" className="hover:text-yellow-400 transition-colors">Auto Avaliar</Link>
           <span>/</span>
           <span className="text-gray-300">{dealer.company_name}</span>
         </div>
